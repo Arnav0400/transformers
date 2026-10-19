@@ -36,15 +36,11 @@ from ..voxtral.modeling_voxtral import (
     VoxtralModelOutputWithPast,
     VoxtralMultiModalProjector,
 )
-from ..whisper.modeling_whisper import WhisperAttention, WhisperEncoderLayer
+from ..whisper.modeling_whisper import WhisperEncoderLayer
 from .configuration_audioflamingo3 import AudioFlamingo3Config
 
 
 logger = logging.get_logger(__name__)
-
-
-class AudioFlamingo3Attention(WhisperAttention):
-    pass
 
 
 class AudioFlamingo3EncoderLayer(WhisperEncoderLayer):
@@ -95,11 +91,6 @@ class AudioFlamingo3Encoder(Qwen2AudioEncoder):
     """
     AudioFlamingo3 encoder: Whisper encoder, average pool (time/2), then LayerNorm.
     """
-
-    _can_record_outputs = {
-        "hidden_states": AudioFlamingo3EncoderLayer,
-        "attentions": AudioFlamingo3Attention,
-    }
 
     @merge_with_config_defaults
     @capture_outputs

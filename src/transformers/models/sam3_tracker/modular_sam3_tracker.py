@@ -28,7 +28,6 @@ from ..sam2.configuration_sam2 import (
     Sam2PromptEncoderConfig,
 )
 from ..sam2.modeling_sam2 import (
-    Sam2Attention,
     Sam2FeedForward,
     Sam2ImageSegmentationOutput,
     Sam2MaskDecoder,
@@ -165,10 +164,6 @@ class Sam3TrackerMaskEmbedding(Sam2MaskEmbedding):
 
 
 class Sam3TrackerPromptEncoder(Sam2PromptEncoder):
-    pass
-
-
-class Sam3TrackerAttention(Sam2Attention):
     pass
 
 
