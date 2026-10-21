@@ -48,7 +48,6 @@ from ..qwen2_5_vl.modeling_qwen2_5_vl import (
     Qwen2_5_VLCausalLMOutputWithPast,
     Qwen2_5_VLForConditionalGeneration,
     Qwen2_5_VLRotaryEmbedding,
-    Qwen2_5_VLVisionBlock,
     Qwen2_5_VLVisionRotaryEmbedding,
 )
 from ..qwen2_vl.modeling_qwen2_vl import (
@@ -56,6 +55,7 @@ from ..qwen2_vl.modeling_qwen2_vl import (
     Qwen2VLModel,
     Qwen2VLModelOutputWithPast,
     Qwen2VLPreTrainedModel,
+    Qwen2VLVisionBlock,
     TransformersKwargs,
     VisionAttention,
 )
@@ -257,9 +257,9 @@ class Qwen3VLVisionAttention(VisionAttention):
         self.dim = config.hidden_size
 
 
-class Qwen3VLVisionBlock(Qwen2_5_VLVisionBlock):
+class Qwen3VLVisionBlock(Qwen2VLVisionBlock):
     def __init__(self, config, attn_implementation: str = "sdpa") -> None:
-        super().__init__()
+        nn.Module.__init__(self)
         self.norm1 = nn.LayerNorm(config.hidden_size, eps=1e-6)
         self.norm2 = nn.LayerNorm(config.hidden_size, eps=1e-6)
         self.attn = Qwen3VLVisionAttention(config=config)

@@ -744,10 +744,10 @@ class Sam3ViTLayer(GradientCheckpointingLayer):
 
         self.config = config
         hidden_size = config.hidden_size
-        self.layer_norm1 = nn.LayerNorm(hidden_size, eps=config.layer_norm_eps)
+        self.input_layernorm = nn.LayerNorm(hidden_size, eps=config.layer_norm_eps)
         self.rotary_emb = Sam3ViTRotaryEmbedding(config)
         self.attention = Sam3ViTRoPEAttention(config)
-        self.layer_norm2 = nn.LayerNorm(hidden_size, eps=config.layer_norm_eps)
+        self.post_attention_layernorm = nn.LayerNorm(hidden_size, eps=config.layer_norm_eps)
         self.mlp = Sam3MLP(config)
         self.dropout = nn.Dropout(config.hidden_dropout)
         self.window_size = window_size
@@ -784,7 +784,7 @@ class Sam3ViTLayer(GradientCheckpointingLayer):
     ) -> torch.Tensor:
         residual = hidden_states
 
-        hidden_states = self.layer_norm1(hidden_states)
+        hidden_states = self.input_layernorm(hidden_states)
 
         if self.window_size > 0:
             height, width = hidden_states.shape[1], hidden_states.shape[2]
@@ -800,7 +800,7 @@ class Sam3ViTLayer(GradientCheckpointingLayer):
 
         hidden_states = residual + hidden_states
         residual = hidden_states
-        hidden_states = self.layer_norm2(hidden_states)
+        hidden_states = self.post_attention_layernorm(hidden_states)
         hidden_states = self.mlp(hidden_states)
         hidden_states = residual + self.dropout(hidden_states)
 

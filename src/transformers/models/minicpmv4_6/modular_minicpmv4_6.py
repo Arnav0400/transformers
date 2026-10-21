@@ -41,12 +41,12 @@ from ...vision_utils import (
     get_vision_window_index,
 )
 from ..auto import CONFIG_MAPPING, AutoConfig, AutoModel
-from ..clip.modeling_clip import CLIPMLP
+from ..clip.modeling_clip import CLIPMLP, CLIPEncoderLayer
 from ..idefics3.modeling_idefics3 import Idefics3VisionEmbeddings
 from ..lfm2_vl.modeling_lfm2_vl import Lfm2VlModel
 from ..qwen2_vl.modeling_qwen2_vl import VisionAttention, eager_attention_forward
 from ..siglip.configuration_siglip import SiglipVisionConfig
-from ..siglip.modeling_siglip import SiglipEncoder, SiglipEncoderLayer
+from ..siglip.modeling_siglip import SiglipEncoder
 
 
 @auto_docstring(checkpoint="openbmb/MiniCPM-V-4.6")
@@ -235,7 +235,7 @@ class MiniCPMV4_6VisionAttention(VisionAttention):
         return attn_output, None
 
 
-class MiniCPMV4_6VisionEncoderLayer(SiglipEncoderLayer):
+class MiniCPMV4_6VisionEncoderLayer(CLIPEncoderLayer):
     def __init__(self, config: MiniCPMV4_6VisionConfig):
         super().__init__(config)
         self.self_attn = MiniCPMV4_6VisionAttention(config)

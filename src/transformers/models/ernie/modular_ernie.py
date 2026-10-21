@@ -44,7 +44,6 @@ from ..bert.modeling_bert import (
     BertForQuestionAnswering,
     BertForSequenceClassification,
     BertForTokenClassification,
-    BertLayer,
     BertLMHeadModel,
     BertLMPredictionHead,
     BertModel,
@@ -119,10 +118,6 @@ class ErnieEmbeddings(BertEmbeddings):
         embeddings = self.LayerNorm(embeddings)
         embeddings = self.dropout(embeddings)
         return embeddings
-
-
-class ErnieLayer(BertLayer):
-    pass
 
 
 class ErniePooler(BertPooler):
