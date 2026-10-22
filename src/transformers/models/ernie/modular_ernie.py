@@ -34,6 +34,7 @@ from ...utils import TransformersKwargs, auto_docstring, logging
 from ...utils.generic import can_return_tuple, merge_with_config_defaults
 from ...utils.output_capturing import capture_outputs
 from ..bert.modeling_bert import (
+    BertCrossAttention,
     BertEmbeddings,
     BertEncoder,
     BertForMaskedLM,
@@ -44,11 +45,13 @@ from ..bert.modeling_bert import (
     BertForQuestionAnswering,
     BertForSequenceClassification,
     BertForTokenClassification,
+    BertLayer,
     BertLMHeadModel,
     BertLMPredictionHead,
     BertModel,
     BertPooler,
     BertPreTrainedModel,
+    BertSelfAttention,
 )
 from .configuration_ernie import ErnieConfig
 
@@ -118,6 +121,18 @@ class ErnieEmbeddings(BertEmbeddings):
         embeddings = self.LayerNorm(embeddings)
         embeddings = self.dropout(embeddings)
         return embeddings
+
+
+class ErnieSelfAttention(BertSelfAttention):
+    pass
+
+
+class ErnieCrossAttention(BertCrossAttention):
+    pass
+
+
+class ErnieLayer(BertLayer):
+    pass
 
 
 class ErniePooler(BertPooler):

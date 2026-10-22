@@ -35,6 +35,7 @@ from ...utils import auto_docstring, logging
 from ..deepseek_v3.configuration_deepseek_v3 import DeepseekV3Config
 from ..deepseek_v3.modeling_deepseek_v3 import (
     DeepseekV3Attention,
+    DeepseekV3DecoderLayer,
     DeepseekV3Experts,
     DeepseekV3ForCausalLM,
     DeepseekV3Model,
@@ -217,6 +218,10 @@ class AXK1Attention(DeepseekV3Attention):
         attn_output = attn_output.reshape(batch_size, seq_length, -1).contiguous()
         attn_output = self.o_proj(attn_output)
         return attn_output, attn_weights
+
+
+class AXK1DecoderLayer(DeepseekV3DecoderLayer):
+    pass
 
 
 class AXK1PreTrainedModel(DeepseekV3PreTrainedModel):

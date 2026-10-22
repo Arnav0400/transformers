@@ -27,9 +27,11 @@ from ..auto import CONFIG_MAPPING, AutoConfig
 from ..convnext.modeling_convnext import ConvNextLayerNorm
 from ..sam2.configuration_sam2 import Sam2Config, Sam2MaskDecoderConfig, Sam2PromptEncoderConfig
 from ..sam2.modeling_sam2 import (
+    Sam2Attention,
     Sam2FeedForward,
     Sam2Model,
     Sam2PreTrainedModel,
+    Sam2TwoWayAttentionBlock,
     Sam2VisionEncoderOutput,
     Sam2VisionModel,
 )
@@ -154,6 +156,14 @@ class EdgeTamLayerNorm(ConvNextLayerNorm):
 
 
 class EdgeTamVisionEncoderOutput(Sam2VisionEncoderOutput):
+    pass
+
+
+class EdgeTamAttention(Sam2Attention):
+    pass
+
+
+class EdgeTamTwoWayAttentionBlock(Sam2TwoWayAttentionBlock):
     pass
 
 
