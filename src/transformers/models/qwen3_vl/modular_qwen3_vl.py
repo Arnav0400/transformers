@@ -47,7 +47,6 @@ from ..glm4v.video_processing_glm4v import smart_resize
 from ..qwen2_5_vl.modeling_qwen2_5_vl import (
     Qwen2_5_VLCausalLMOutputWithPast,
     Qwen2_5_VLForConditionalGeneration,
-    Qwen2_5_VLRotaryEmbedding,
     Qwen2_5_VLVisionRotaryEmbedding,
 )
 from ..qwen2_vl.modeling_qwen2_vl import (
@@ -55,6 +54,7 @@ from ..qwen2_vl.modeling_qwen2_vl import (
     Qwen2VLModel,
     Qwen2VLModelOutputWithPast,
     Qwen2VLPreTrainedModel,
+    Qwen2VLRotaryEmbedding,
     Qwen2VLVisionBlock,
     TransformersKwargs,
     VisionAttention,
@@ -266,15 +266,10 @@ class Qwen3VLVisionBlock(Qwen2VLVisionBlock):
         self.mlp = Qwen3VLVisionMLP(config=config)
 
 
-class Qwen3VLTextRotaryEmbedding(Qwen2_5_VLRotaryEmbedding):
-    def __init__(self, config: Qwen3VLTextConfig, device=None):
+class Qwen3VLTextRotaryEmbedding(Qwen2VLRotaryEmbedding):
+    def __init__(self, config: Qwen3VLTextConfig):
         super().__init__()
         self.mrope_section = config.rope_parameters.get("mrope_section", [24, 20, 20])
-
-    def compute_default_rope_parameters(
-        config: Qwen3VLTextConfig, device=None, **kwargs
-    ) -> tuple[torch.Tensor, float]:
-        return super().compute_default_rope_parameters(config, device, **kwargs)
 
     def recomposition_frequencies(self, freq):
         """

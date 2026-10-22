@@ -49,7 +49,7 @@ from .configuration_cosmos3_edge import Cosmos3EdgeConfig, Cosmos3EdgeTextConfig
 
 
 class Cosmos3EdgeTextRotaryEmbedding(nn.Module):
-    def __init__(self, config: Cosmos3EdgeTextConfig, device=None):
+    def __init__(self, config: Cosmos3EdgeTextConfig):
         super().__init__()
         self.max_seq_len_cached = config.max_position_embeddings
         self.original_max_seq_len = config.max_position_embeddings
@@ -67,9 +67,7 @@ class Cosmos3EdgeTextRotaryEmbedding(nn.Module):
         self.mrope_section = config.rope_parameters.get("mrope_section", [24, 20, 20])
 
     @staticmethod
-    def compute_default_rope_parameters(
-        config: Cosmos3EdgeTextConfig, device=None, **kwargs
-    ) -> tuple[torch.Tensor, float]:
+    def compute_default_rope_parameters(config: Cosmos3EdgeConfig, **kwargs) -> tuple[torch.Tensor, float]:
         """
         Computes the inverse frequencies according to the original RoPE implementation
         Args:
